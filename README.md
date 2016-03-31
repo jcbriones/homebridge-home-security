@@ -2,11 +2,11 @@
 Web interface for home automation devices.
 
 
-Things to do
+### Things to do
 - [x] SQL Script
 - [x] Database
 - [x] HomeKit Web Page Design
-- [-] Config file
+- [ ] Config file
 - [ ] Language folder and files
 - [ ] Welcome Page
 - [ ] Installation Page
