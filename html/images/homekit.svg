@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800px" height="500px" viewBox="0 0 800 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.3 (7891) - http://www.bohemiancoding.com/sketch -->
+    <title>HomeKit</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.07 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.07 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.07 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="HomeKit" sketch:type="MSArtboardGroup">
+            <g id="HomeKit-Icon" sketch:type="MSLayerGroup" transform="translate(210.000000, 39.000000)">
+                <path d="M358.425522,314.612533 C386.918372,292.429159 386.914634,256.459893 358.425522,234.27943 L241.487748,143.236439 C212.994898,121.053065 166.795121,121.055976 138.306009,143.236439 L21.3682358,234.27943 C-7.12461463,256.462804 -7.12087586,292.43207 21.3682358,314.612533 L138.306009,405.655524 C166.79886,427.838898 212.998637,427.835987 241.487748,405.655524 L358.425522,314.612533 Z" id="Bottom" stroke="#FF8519" stroke-width="1.87654321" fill="#F97400" filter="url(#filter-1)" sketch:type="MSShapeGroup"></path>
+                <path d="M358.425522,251.312533 C386.918372,229.129159 386.914634,193.159893 358.425522,170.97943 L241.487748,79.9364388 C212.994898,57.753065 166.795121,57.7559759 138.306009,79.9364388 L21.3682358,170.97943 C-7.12461463,193.162804 -7.12087586,229.13207 21.3682358,251.312533 L138.306009,342.355524 C166.79886,364.538898 212.998637,364.535987 241.487748,342.355524 L358.425522,251.312533 Z" id="Middle" stroke="#FFA73A" stroke-width="1.87654321" fill="#FF9D22" filter="url(#filter-2)" sketch:type="MSShapeGroup"></path>
+                <path d="M358.425522,188.012533 C386.918372,165.829159 386.914634,129.859893 358.425522,107.67943 L241.487748,16.6364388 C212.994898,-5.54693499 166.795121,-5.54402414 138.306009,16.6364388 L21.3682358,107.67943 C-7.12461463,129.862804 -7.12087586,165.83207 21.3682358,188.012533 L138.306009,279.055524 C166.79886,301.238898 212.998637,301.235987 241.487748,279.055524 L358.425522,188.012533 Z" id="Top" stroke="#FFCA19" stroke-width="1.87654321" fill="#FEC400" filter="url(#filter-3)" sketch:type="MSShapeGroup"></path>
+                <path d="M137.515292,192.40317 L197.374865,238.907691 C199.08021,240.232562 199.3803,240.229683 201.076253,238.912109 L308.483223,155.468318 C310.185544,154.145795 310.1846,153.91894 308.477537,152.592733 L248.617964,106.088212 M222.081778,85.4724186 L176.413173,49.9927705 C174.709262,48.6690129 174.416388,48.6680906 172.707235,49.9959205 L151.727745,66.2947527 C150.021478,67.6203409 150.020355,67.8505618 151.724862,69.174782 L170.288619,83.5968472 M137.286862,192.438733 L116.005752,208.971892 C112.593641,211.622739 112.769502,208.34096 112.591378,204.595933 L110.003024,87.6982963 C109.914029,85.827186 111.800074,84.3665657 114.20277,84.4355405 L171.000369,84.1125734 M222.538398,85.5920879 C239.149106,86.0689354 264.670778,86.4464158 264.670778,86.4464158 C269.489254,86.584741 273.712087,86.4508443 270.312084,89.0922849 L248.427726,106.094103 M239.860918,153.646968 C218.166772,153.646968 200.580192,167.307525 200.580192,184.158675 M236.322389,135.781223 C203.540124,135.781223 176.964847,156.423842 176.964847,181.887803 M231.113198,116.816121 C187.724906,116.816121 152.551745,144.137234 152.551745,177.839535" id="HomeKit" stroke="#FFFFFF" stroke-width="8.72905028" stroke-linecap="round" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>
