@@ -65,10 +65,13 @@ void loop() {
     // ===========================
     // Select which mode
     // ---------------------------
+    // 'E' => Enable Home Security
+    //    '1' => True
+    //    '0' => False
     // 'P' => Activate Pin
     //    'dpin:' => digitalPin
-    //      'T' => t
-    //      'F' => f
+    //      '1' => True
+    //      '0' => False
     // 'M' => Mode
     //    '0' => stay
     //    '1' => away
@@ -76,24 +79,24 @@ void loop() {
     //    '3' => disarm
     //    '4' => triggered
     // 's' => Security Alarm
-    //    'w' => warning
-    //    'a' => active
-    //    'd' => disarm
+    //    '0' => disarm
+    //    '1' => warning
+    //    '2' => active
     // 'r' => RF433 Transmitter
     // 'd' => Read digitalPin
     //    'dpin:' => digitalPin
     // 'S' => Stay
     //    'dpin:' => digitalPin
-    //      'T' => T
-    //      'F' => F
+    //      '1' => True
+    //      '0' => False
     // 'A' => Away
     //    'dpin:' => digitalPin
-    //      'T' => T
-    //      'F' => F
+    //      '1' => True
+    //      '0' => False
     // 'N' => Night
     //    'dpin:' => digitalPin
-    //      'T' => T
-    //      'F' => F
+    //      '1' => True
+    //      '0' => False
     // ===========================
     char menu;
     int pin, currentState;
@@ -103,7 +106,7 @@ void loop() {
     switch (menu)
     {
       case 'E': // Enable the Home Security
-        if (Serial.read() == 'T')
+        if (Serial.read() == '1')
         {
           enabled = true;
           Serial.println("HomeSecurity:1");
@@ -117,7 +120,7 @@ void loop() {
         
       case 'P': // Activate or deactivate a digitalPin
         pin = Serial.readStringUntil(':').toInt();
-        if (Serial.read() == 'T')
+        if (Serial.read() == '1')
         {
           pinActivated[pin] = true;
           Serial.println("ActivePin" + String(pin) + ":1");
@@ -154,16 +157,16 @@ void loop() {
         menu = Serial.read();
 
         // Warning alarm
-        if (menu == 'w')
+        if (menu == '1')
         {
           alarmStatus = 1;
           warningTimeStart = millis();
         }
         // Active alarm
-        else if (menu == 'a')
+        else if (menu == '2')
           alarmStatus = 2;
         // Disarm alarm
-        else if (menu == 'd')
+        else if (menu == '0')
           alarmStatus = 0;
         printDigitalPinStatus(securityAlarm, alarmStatus);
         break;
@@ -179,7 +182,7 @@ void loop() {
 
       case 'S': // Set digitalPin for Stay
         pin = Serial.readStringUntil(':').toInt();
-        if (Serial.read() == 'T')
+        if (Serial.read() == '1')
         {
           modeStay[pin] = true;
           Serial.println("Stay" + String(pin) + ":1");
@@ -193,7 +196,7 @@ void loop() {
 
       case 'A': // Set digitalPin for Away
         pin = Serial.readStringUntil(':').toInt();
-        if (Serial.read() == 'T')
+        if (Serial.read() == '1')
         {
           modeAway[pin] = true;
           Serial.println("Away" + String(pin) + ":1");
@@ -207,7 +210,7 @@ void loop() {
 
       case 'N': // Set digitalPin for Night
         pin = Serial.readStringUntil(':').toInt();
-        if (Serial.read() == 'T')
+        if (Serial.read() == '1')
         {
           modeNight[pin] = true;
           Serial.println("Night" + String(pin) + ":1");
