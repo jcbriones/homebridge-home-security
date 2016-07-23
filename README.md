@@ -1,12 +1,10 @@
 # Home
-Web interface for home automation devices.
-
+Still under development. Currently, the code for home security using an Arduino Mega is done and the server that runs Python flask web server is also working. However, a lot of optimization still need to be done for both client and server.
 
 ### Things to do
-- [x] SQL Script
 - [x] Database
-- [x] HomeKit Web Page Design
-- [ ] Config file
+- [x] Home Security Web Page Design
+- [x] Config file
 - [ ] Language folder and files
 - [ ] Welcome Page
 - [ ] Installation Page
