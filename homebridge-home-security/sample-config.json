@@ -1,0 +1,29 @@
+{
+    "bridge": {
+        "name": "HomebridgePI",
+        "username": "CD:22:3D:E3:CE:30",
+        "port": 51826,
+        "pin": "031-45-156"
+    },
+
+    "description": "The Onion!",
+
+    "platforms": [],
+
+    "accessories": [
+        {
+            "accessory": "HomeSecurity",
+            "name": "Living Room Window Sensor",
+            "url": "http://192.168.2.128:5000/get/22",
+            "type": "window",
+            "http_method": "GET"
+        },
+        {
+            "accessory": "HomeSecurity",
+            "name": "Living Room Motion Sensor",
+            "url": "http://192.168.2.128:5000/get/34",
+            "type": "motion",
+            "http_method": "GET"
+        }
+    ]
+}
