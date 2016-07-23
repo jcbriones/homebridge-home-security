@@ -44,7 +44,6 @@ HomeSecurity.prototype = {
             this.log('HTTP getCurrentState function failed');
             callback(error);
         } else {
-            this.log('HTTP getCurrentState function succeeded!');
             var info = JSON.parse(res.body);
 
             if (this.type == "contact") {
@@ -52,11 +51,13 @@ HomeSecurity.prototype = {
                     Characteristic.ContactSensorState,
                     info.val
                 );
+				this.log('HTTP getTargetState function succeeded! Data: ' + info);
             } else if (this.type == "motion") {
                 this.securityService.setCharacteristic(
                     Characteristic.MotionDetected,
                     info.val
                 );
+				this.log('HTTP getTargetState function succeeded! Data: ' + info);
             } else if (this.type == "security") {
                 this.securityService.setCharacteristic(
                     Characteristic.SecuritySystemCurrentState,
@@ -73,7 +74,6 @@ HomeSecurity.prototype = {
             this.log('HTTP getTargetState function failed');
             callback(error);
         } else {
-            this.log('HTTP getTargetState function succeeded!');
             var info = JSON.parse(res.body);
 
             if (this.type == "security" && info.val != 4) {
@@ -81,6 +81,7 @@ HomeSecurity.prototype = {
                     Characteristic.SecuritySystemCurrentState,
                     info.val
                 );
+                this.log('HTTP getTargetState function succeeded! Data: ' + info);
                 callback(null, info.val);
                 this.targetState = info.val;
             }
@@ -89,6 +90,7 @@ HomeSecurity.prototype = {
                     Characteristic.SecuritySystemCurrentState,
                     this.targetState
                 );
+                this.log('HTTP getTargetState function succeeded! Data: ' + info);
                 callback(null, this.targetState);
             }
             
@@ -101,13 +103,14 @@ HomeSecurity.prototype = {
             this.log('HTTP setTargetState function failed');
             callback(error);
         } else {
-            this.log('HTTP setTargetState function succeeded!');
-			
+            var info = JSON.parse(res.body);
+
             if (this.type == "security") {
                 this.securityService.setCharacteristic(
                     Characteristic.SecuritySystemCurrentState,
                     value
                 );
+                this.log('HTTP setTargetState function succeeded! Data: ' + info);
             }
             callback();
         }
@@ -150,30 +153,32 @@ HomeSecurity.prototype = {
                 .on('set', this.setTargetState.bind(this));
         }
 
-		// Get updated values every 3 seconds
+        // Get updated values every 3 seconds
         setInterval((function() {
             var res = request(this.http_method, this.url + '/get/' + this.dpin, {});
             if (res.statusCode >= 400) {
                 this.log('HTTP updateState function failed');
             } else {
-                this.log('HTTP updateState function succeeded!');
                 var info = JSON.parse(res.body);
 
                 if (this.type == "security" && info.val == 4 && this.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState) != info.val) {
                     this.securityService.setCharacteristic(
                         Characteristic.SecuritySystemCurrentState,
-                        4
+                        info.val
                     );
+                    this.log('HTTP updateState function succeeded! Data: ' + info);
                 } else if (this.type == "contact" && this.securityService.getCharacteristic(Characteristic.ContactSensorState) != info.val) {
                     this.securityService.setCharacteristic(
                         Characteristic.ContactSensorState,
                         info.val
                     );
+                    this.log('HTTP updateState function succeeded! Data: ' + info);
                 } else if (this.type == "motion" && this.securityService.getCharacteristic(Characteristic.MotionDetected) != info.val) {
                     this.securityService.setCharacteristic(
                         Characteristic.MotionDetected,
                         info.val
                     );
+                    this.log('HTTP updateState function succeeded! Data: ' + info);
                 }
             }
 
