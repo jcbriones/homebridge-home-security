@@ -24,7 +24,7 @@ class Arduino():
         - T for enabled
         - F for disabled
         """
-        command = (''.join(('E',enabled))).encode()
+        command = (''.join(('E',str(enabled)))).encode()
         #print 'set_enable =',command,(''.join(('E',enabled)))
         self.conn.write(command)
     
@@ -35,7 +35,7 @@ class Arduino():
         - T for TRUE
         - F for FALSE
         """
-        command = (''.join(('P' + str(pin) + ':',val))).encode()
+        command = (''.join(('P' + str(pin) + ':', str(val)))).encode()
         #print 'set_pin_stay =',command,(''.join(('P' + str(pin),val)))
         self.conn.write(command)
 
@@ -48,7 +48,7 @@ class Arduino():
         - 2 for NIGHT
         - 3 for DISARM
         """
-        command = (''.join(('M',mode))).encode()
+        command = (''.join(('M',str(mode)))).encode()
         #print 'set_mode =',command,(''.join(('M',mode)))
         self.conn.write(command)
 
@@ -56,11 +56,11 @@ class Arduino():
         """
         Performs an alarm operation on HomeSecurity
         Internally sends 's{alarm}' where mode could be:
-        - w for WARNING
-        - a for ACTIVE
-        - d for DISARM
+        - 1 for WARNING
+        - 2 for ACTIVE
+        - 0 for DISARM
         """
-        command = (''.join(('s',alarm))).encode()
+        command = (''.join(('s',str(alarm)))).encode()
         #print 'set_alarm =',command,(''.join(('s',alarm)))
         self.conn.write(command)
 
@@ -68,10 +68,10 @@ class Arduino():
         """
         Performs an alarm operation on HomeSecurity
         Internally sends 'S{pin}:{val}' where val could be:
-        - T for TRUE
-        - F for FALSE
+        - 1 for TRUE
+        - 0 for FALSE
         """
-        command = (''.join(('S' + str(pin) + ':',val))).encode()
+        command = (''.join(('S' + str(pin) + ':',str(val)))).encode()
         #print 'set_pin_stay =',command,(''.join(('S' + str(pin),val)))
         self.conn.write(command)
 
@@ -79,10 +79,10 @@ class Arduino():
         """
         Performs an alarm operation on HomeSecurity
         Internally sends 'A{pin}:{val}' where val could be:
-        - T for TRUE
-        - F for FALSE
+        - 1 for TRUE
+        - 0 for FALSE
         """
-        command = (''.join(('A' + str(pin) + ':',val))).encode()
+        command = (''.join(('A' + str(pin) + ':',str(val)))).encode()
         #print 'set_pin_away =',command,(''.join(('A' + str(pin),val)))
         self.conn.write(command)
 
@@ -90,10 +90,10 @@ class Arduino():
         """
         Performs an alarm operation on HomeSecurity
         Internally sends 'N{pin}:{val}' where val could be:
-        - T for TRUE
-        - F for FALSE
+        - 1 for TRUE
+        - 0 for FALSE
         """
-        command = (''.join(('N' + str(pin) + ':',val))).encode()
+        command = (''.join(('N' + str(pin) + ':',str(val)))).encode()
         #print 'set_pin_night =',command,(''.join(('N' + str(pin),val)))
         self.conn.write(command)
 

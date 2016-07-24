@@ -11,6 +11,7 @@ module.exports = function(homebridge) {
 function HomeSecurity(log, config) {
     this.log = log;
     this.targetState = 3;
+	this.current = 0;
 
     // url info
     this.url = config["url"] || "";
@@ -51,18 +52,22 @@ HomeSecurity.prototype = {
                     Characteristic.ContactSensorState,
                     info.val
                 );
-				this.log('HTTP getTargetState function succeeded! Data: ' + info);
+				this.current = info.val;
+				this.log('HTTP getTargetState function succeeded! Data: ' + info.val);
             } else if (this.type == "motion") {
                 this.securityService.setCharacteristic(
                     Characteristic.MotionDetected,
                     info.val
                 );
-				this.log('HTTP getTargetState function succeeded! Data: ' + info);
+				this.current = info.val;
+				this.log('HTTP getTargetState function succeeded! Data: ' + info.val);
             } else if (this.type == "security") {
                 this.securityService.setCharacteristic(
                     Characteristic.SecuritySystemCurrentState,
                     info.val
                 );
+				this.current = info.val;
+				this.log('HTTP getTargetState function succeeded! Data: ' + info.val);
             }
             callback(null, info.val);
         }
@@ -76,24 +81,15 @@ HomeSecurity.prototype = {
         } else {
             var info = JSON.parse(res.body);
 
-            if (this.type == "security" && info.val != 4) {
+            if (this.type == "security" && info.val != 4 && this.targetState != info.val) {
                 this.securityService.setCharacteristic(
                     Characteristic.SecuritySystemCurrentState,
                     info.val
                 );
-                this.log('HTTP getTargetState function succeeded! Data: ' + info);
-                callback(null, info.val);
+                this.log('HTTP getTargetState function succeeded! Data: ' + info.val);
                 this.targetState = info.val;
-            }
-            else {
-                this.securityService.setCharacteristic(
-                    Characteristic.SecuritySystemCurrentState,
-                    this.targetState
-                );
-                this.log('HTTP getTargetState function succeeded! Data: ' + info);
-                callback(null, this.targetState);
-            }
-            
+			}
+			callback(null, this.targetState);
         }
     },
 	
@@ -110,7 +106,8 @@ HomeSecurity.prototype = {
                     Characteristic.SecuritySystemCurrentState,
                     value
                 );
-                this.log('HTTP setTargetState function succeeded! Data: ' + info);
+				this.current = value;
+                this.log('HTTP setTargetState function succeeded! Data: ' + value);
             }
             callback();
         }
@@ -161,24 +158,27 @@ HomeSecurity.prototype = {
             } else {
                 var info = JSON.parse(res.body);
 
-                if (this.type == "security" && info.val == 4 && this.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState) != info.val) {
+                if (this.type == "security" && info.val == 4 && this.current != info.val) {
                     this.securityService.setCharacteristic(
                         Characteristic.SecuritySystemCurrentState,
                         info.val
                     );
-                    this.log('HTTP updateState function succeeded! Data: ' + info);
-                } else if (this.type == "contact" && this.securityService.getCharacteristic(Characteristic.ContactSensorState) != info.val) {
+					this.current = info.val;
+                    this.log('HTTP updateState function succeeded! Data: ' + info.val);
+                } else if (this.type == "contact" && this.current != info.val) {
                     this.securityService.setCharacteristic(
                         Characteristic.ContactSensorState,
                         info.val
                     );
-                    this.log('HTTP updateState function succeeded! Data: ' + info);
-                } else if (this.type == "motion" && this.securityService.getCharacteristic(Characteristic.MotionDetected) != info.val) {
+					this.current = info.val;
+                    this.log('HTTP updateState function succeeded! Data: ' + info.val);
+                } else if (this.type == "motion" && this.current != info.val) {
                     this.securityService.setCharacteristic(
                         Characteristic.MotionDetected,
                         info.val
                     );
-                    this.log('HTTP updateState function succeeded! Data: ' + info);
+					this.current = info.val;
+                    this.log('HTTP updateState function succeeded! Data: ' + info.val);
                 }
             }
 

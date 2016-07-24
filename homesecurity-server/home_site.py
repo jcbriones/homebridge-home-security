@@ -31,7 +31,7 @@ def initHome():
     time.sleep(1)
     
     db.purge()
-    a.set_mode('3')
+    a.set_mode(3)
     db.insert({'type': 'Mode', 'val': 3})
     a.set_alarm('d')
     db.insert({'type': 'Alarm', 'val': 3})
@@ -131,7 +131,7 @@ def init_home():
 
 # unsecure API urls
 @app.route('/activate/<pin>/<val>')
-def mode(pin, val):
+def activate(pin, val):
     a.set_activate_pin(pin, val)
     query = db.get((HomeDB.type == 'ActivePin') & (HomeDB.pin == pin))
     return render_template('json.html', query=query)
