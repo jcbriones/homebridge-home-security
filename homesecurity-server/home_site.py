@@ -1,21 +1,17 @@
 from flask import Flask, render_template,request, redirect, url_for
 from HomeSecurity import *
 from tinydb import TinyDB, Query
+from tinydb.storages import MemoryStorage
 from threading import Thread
 import time
 
-db = TinyDB('db.json').table('HomeSecurity')
+db = TinyDB(storage=MemoryStorage)
 HomeDB = Query()
 app = Flask(__name__)
 
 # variables for template page (templates/index.html)
 home_name = "House Name"
 address = "Street Address, City, State, Postal Code"
-
-# variables for the system
-windowSensors = range(22, 28+1)
-doorSensors = range(30, 33+1)
-motionSensors = range(34, 40+1)
 
 ## RF433 Transmitter = 10
 ## RF433 Receiver = 11
@@ -192,7 +188,6 @@ if __name__ == "__main__":
                 print db.update({'val': int(val[1])}, HomeDB.type == val[0])
             else:
                 print db.update({'val': int(val[1])}, (HomeDB.type == val[0]) & (HomeDB.pin == int(val[2])))
-            time.sleep(0.1)
         except KeyboardInterrupt:
             print ''
             break # kill for loop
