@@ -38,23 +38,23 @@ def initHome():
 
     ## Active Sensors
     # Window Sensors
-    for i in windowSensors:
+    for i in range(22, 28+1):
         a.set_activate_pin(i,1)
-        db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
+        #db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
     # Door Sensors
-    for i in doorSensors:
+    for i in range(30, 33+1):
         a.set_activate_pin(i,1)
-        db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
+        #db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
     # Motion Sensors
-    for i in motionSensors:
+    for i in range(34, 40+1):
         a.set_activate_pin(i,1)
-        db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
+        #db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
 
-    for i in windowSensors:
+    for i in range(22, 28+1):
         db.insert({'type': 'WindowDoor', 'pin': i, 'val': 0})
-    for i in doorSensors:
+    for i in range(30, 33+1):
         db.insert({'type': 'WindowDoor', 'pin': i, 'val': 0})
-    for i in motionSensors:
+    for i in range(34, 40+1):
         db.insert({'type': 'Motion', 'pin': i, 'val': 0})
 
     # Stay
@@ -85,7 +85,7 @@ def initHome():
         time.sleep(0.1)
 
     a.set_enable(1)
-    db.insert({'type': 'HomeSecurity', 'val': 1})
+    #db.insert({'type': 'HomeSecurity', 'val': 1})
 
     # initialize complete
     print 'Home Security initialized'
@@ -189,12 +189,16 @@ if __name__ == "__main__":
             print val[1]   # Value
             print val[2]   # Pin
             if val[2] == 0:
-                db.update({'val': int(val[1])}, HomeDB.type == val[0])
+                print db.update({'val': int(val[1])}, HomeDB.type == val[0])
             else:
-                db.update({'val': int(val[1])}, (HomeDB.type == val[0]) & (HomeDB.pin == int(val[2])))
+                print db.update({'val': int(val[1])}, (HomeDB.type == val[0]) & (HomeDB.pin == int(val[2])))
+            time.sleep(0.1)
         except KeyboardInterrupt:
             print ''
             break # kill for loop
+        except ValueError:
+            a.close()
+            a = initHome()
 
     print 'CLOSING...'
     a.close()
