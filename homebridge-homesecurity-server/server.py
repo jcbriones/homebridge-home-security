@@ -29,23 +29,24 @@ def initHome():
     db.purge()
     a.set_mode(3)
     db.insert({'type': 'Mode', 'val': 3})
-    a.set_alarm('d')
-    db.insert({'type': 'Alarm', 'val': 3})
+    a.set_alarm(0)
+    db.insert({'type': 'Alarm', 'val': 0})
 
     ## Active Sensors
     # Window Sensors
     for i in range(22, 28+1):
         a.set_activate_pin(i,1)
-        #db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
+        db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
     # Door Sensors
     for i in range(30, 33+1):
         a.set_activate_pin(i,1)
-        #db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
+        db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
     # Motion Sensors
     for i in range(34, 40+1):
         a.set_activate_pin(i,1)
-        #db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
+        db.insert({'type': 'ActivePin', 'pin': i, 'val': 1})
 
+    # Generate WindowDoor and Motion in the DB
     for i in range(22, 28+1):
         db.insert({'type': 'WindowDoor', 'pin': i, 'val': 0})
     for i in range(30, 33+1):
@@ -53,6 +54,7 @@ def initHome():
     for i in range(34, 40+1):
         db.insert({'type': 'Motion', 'pin': i, 'val': 0})
 
+    # Set PINs
     # Stay
     for i in range(22,28+1):
         a.set_pin_stay(i,1)
@@ -81,7 +83,7 @@ def initHome():
         time.sleep(0.1)
 
     a.set_enable(1)
-    #db.insert({'type': 'HomeSecurity', 'val': 1})
+    db.insert({'type': 'HomeSecurity', 'val': 1})
 
     # initialize complete
     print 'Home Security initialized'
@@ -168,32 +170,24 @@ def runFlask():
     app.run(host='0.0.0.0')
 
 if __name__ == "__main__":
-
-    # initialize home
-    a = initHome()
-    time.sleep(0.1)
-    
     # runs the flask app
     t1 = Thread(target = runFlask)
     t1.setDaemon(True)
     t1.start()
 
+    # initialize home
+    a = initHome()
+
     while True:
         try:
             val = a.get_line()
-            print val[0]   # Type
-            print val[1]   # Value
-            print val[2]   # Pin
-            if val[2] == 0:
-                print db.update({'val': int(val[1])}, HomeDB.type == val[0])
-            else:
-                print db.update({'val': int(val[1])}, (HomeDB.type == val[0]) & (HomeDB.pin == int(val[2])))
+            if len(val) == 2:
+                db.update({'val': int(val[1])}, HomeDB.type == val[0])
+            elif len(val) == 3:
+                db.update({'val': int(val[1])}, (HomeDB.type == val[0]) & (HomeDB.pin == int(val[2])))
         except KeyboardInterrupt:
             print ''
             break # kill for loop
-        except ValueError:
-            a.close()
-            a = initHome()
 
     print 'CLOSING...'
     a.close()

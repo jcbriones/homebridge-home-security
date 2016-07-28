@@ -25,7 +25,7 @@ class Arduino():
         - F for disabled
         """
         command = (''.join(('E',str(enabled)))).encode()
-        #print 'set_enable =',command,(''.join(('E',enabled)))
+        #print 'set_enable =',command,(''.join(('E',str(enabled))))
         self.conn.write(command)
     
     def set_activate_pin(self, pin, val):
@@ -36,7 +36,7 @@ class Arduino():
         - F for FALSE
         """
         command = (''.join(('P' + str(pin) + ':', str(val)))).encode()
-        #print 'set_pin_stay =',command,(''.join(('P' + str(pin),val)))
+        #print 'set_activate_pin =',command,(''.join(('P' + str(pin),str(val))))
         self.conn.write(command)
 
     def set_mode(self, mode):
@@ -49,7 +49,7 @@ class Arduino():
         - 3 for DISARM
         """
         command = (''.join(('M',str(mode)))).encode()
-        #print 'set_mode =',command,(''.join(('M',mode)))
+        #print 'set_mode =',command,(''.join(('M',str(mode))))
         self.conn.write(command)
 
     def set_alarm(self, alarm):
@@ -61,7 +61,7 @@ class Arduino():
         - 0 for DISARM
         """
         command = (''.join(('s',str(alarm)))).encode()
-        #print 'set_alarm =',command,(''.join(('s',alarm)))
+        #print 'set_alarm =',command,(''.join(('s',str(alarm))))
         self.conn.write(command)
 
     def set_pin_stay(self, pin, val):
@@ -72,7 +72,7 @@ class Arduino():
         - 0 for FALSE
         """
         command = (''.join(('S' + str(pin) + ':',str(val)))).encode()
-        #print 'set_pin_stay =',command,(''.join(('S' + str(pin),val)))
+        #print 'set_pin_stay =',command,(''.join(('S' + str(pin),str(val))))
         self.conn.write(command)
 
     def set_pin_away(self, pin, val):
@@ -83,7 +83,7 @@ class Arduino():
         - 0 for FALSE
         """
         command = (''.join(('A' + str(pin) + ':',str(val)))).encode()
-        #print 'set_pin_away =',command,(''.join(('A' + str(pin),val)))
+        #print 'set_pin_away =',command,(''.join(('A' + str(pin),str(val))))
         self.conn.write(command)
 
     def set_pin_night(self, pin, val):
@@ -94,7 +94,7 @@ class Arduino():
         - 0 for FALSE
         """
         command = (''.join(('N' + str(pin) + ':',str(val)))).encode()
-        #print 'set_pin_night =',command,(''.join(('N' + str(pin),val)))
+        #print 'set_pin_night =',command,(''.join(('N' + str(pin),str(val))))
         self.conn.write(command)
 
     def get_line(self):
@@ -104,11 +104,17 @@ class Arduino():
         line_received = self.conn.readline().decode().strip()
         header, value = line_received.split(':')
         match = re.match(r"([a-z]+)([0-9]+)", header, re.I)
+        print '- = Received = -'
         if match:
             items = match.groups()
+            print 'Type: ' + items[0]
+            print 'Val:  ' + value
+            print 'Pin:  ' + items[1]
             return items[0], value, items[1]
         else:
-            return header, value, 0
+            print 'Type: ' + header
+            print 'Val:  ' + value
+            return header, value
     
     def close(self):
         """
