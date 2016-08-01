@@ -17,8 +17,6 @@ function Server(log, config) {
             return;
         }
         console.log("HomeSecurityServer is listening on port 5000");
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
     });
 }
 Server.prototype.accessories = function(callback) {
