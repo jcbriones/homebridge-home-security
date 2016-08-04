@@ -21,7 +21,7 @@ boolean lockLow[N_ELEMS(pirSensor)];
 boolean takeLowTime[N_ELEMS(pirSensor)];
 long unsigned int lowIn[N_ELEMS(pirSensor)];  // the time when the sensor outputs a low impulse
 int alarmStatus;                              // 0 = Off, 1 = Warning, 2 = On
-int alarmState = 3;                           // 0 = Stay, 1 = Away, 2 = Night, 3 = Disarm
+int alarmState;                           // 0 = Stay, 1 = Away, 2 = Night, 3 = Disarm
 boolean windowDoorStatus[N_ELEMS(windowDoorSensor)];
 unsigned long previousMillis = 0;             // will store last time alarm status was set
 unsigned long warningTimeStart = 0;           // will store last time alarm warning was set
@@ -31,7 +31,7 @@ unsigned long warningTimeStart = 0;           // will store last time alarm warn
 // ================================================
 long unsigned int alarmInterval = 3000;       // interval used for alarm. should be < 25
 long unsigned int alarmWarnTimer = 60000;     // interval for alarm warning timer before going off the alarm. Default: 60 sec
-long unsigned int sensorInterval = 5000;      // the amount of milliseconds the sensor has to be low before we assume all motion has stopped.
+long unsigned int sensorInterval = 60000;      // the amount of milliseconds the sensor has to be low before we assume all motion has stopped.
 
 // ================================================
 void setup () {
