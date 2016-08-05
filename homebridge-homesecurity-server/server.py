@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request, redirect, url_for
+from flask import Flask, render_template,request, redirect, url_for, jsonify
 from HomeSecurity import *
 from tinydb import TinyDB, Query
 from tinydb.storages import MemoryStorage
@@ -27,8 +27,8 @@ def initHome():
     time.sleep(1)
     
     db.purge()
-    a.set_mode(3)
-    db.insert({'type': 'Mode', 'val': 3})
+    a.set_mode(0)
+    db.insert({'type': 'Mode', 'val': 0})
     a.set_alarm(0)
     db.insert({'type': 'Alarm', 'val': 0})
 
@@ -132,34 +132,34 @@ def init_home():
 def activate(pin, val):
     a.set_activate_pin(pin, val)
     query = db.get((HomeDB.type == 'ActivePin') & (HomeDB.pin == pin))
-    return render_template('json.html', query=query)
+    return jsonify(query)
 
 @app.route('/mode/<val>')
 def mode(val):
     a.set_mode(val)
     query = db.get((HomeDB.type == 'Mode'))
-    return render_template('json.html', query=query)
+    return jsonify(query)
 
 @app.route('/alarm/<val>')
 def alarm(val):
     a.set_alarm(val)
     query = db.get((HomeDB.type == 'Alarm'))
-    return render_template('json.html', query=query)
+    return jsonify(query)
 
 @app.route('/get/mode')
 def getmode():
     query = db.get((HomeDB.type == 'Mode'))
-    return render_template('json.html', query=query)
+    return jsonify(query)
 
 @app.route('/get/alarm')
 def getalarm():
     query = db.get((HomeDB.type == 'Alarm'))
-    return render_template('json.html', query=query)
+    return jsonify(query)
 
 @app.route('/get/<pin>')
 def get(pin):
     query = db.get((HomeDB.pin == int(pin)) & ((HomeDB.type == 'WindowDoor') | (HomeDB.type == 'Motion')))
-    return render_template('json.html', query=query)
+    return jsonify(query)
 
 
 
@@ -185,9 +185,13 @@ if __name__ == "__main__":
                 db.update({'val': int(val[1])}, HomeDB.type == val[0])
             elif len(val) == 3:
                 db.update({'val': int(val[1])}, (HomeDB.type == val[0]) & (HomeDB.pin == int(val[2])))
+        except ValueError:
+            print 'Something went wrong while getting data from Arduino'
         except KeyboardInterrupt:
             print ''
             break # kill for loop
+        except Exception:
+            print 'Getting exception while processing data... ignoring...'
 
     print 'CLOSING...'
     a.close()
