@@ -86,7 +86,7 @@ def initHome():
     db.insert({'type': 'HomeSecurity', 'val': 1})
 
     # initialize complete
-    print 'Home Security initialized'
+    #print 'Home Security initialized'
     return a;
 
 # we are able to make 2 different requests on our webpage

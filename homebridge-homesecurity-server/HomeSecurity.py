@@ -104,16 +104,16 @@ class Arduino():
         line_received = self.conn.readline().decode().strip()
         header, value = line_received.split(':')
         match = re.match(r"([a-z]+)([0-9]+)", header, re.I)
-        print '- = Received = -'
+        #print '- = Received = -'
         if match:
             items = match.groups()
-            print 'Type: ' + items[0]
-            print 'Val:  ' + value
-            print 'Pin:  ' + items[1]
+            #print 'Type: ' + items[0]
+            #print 'Val:  ' + value
+            #print 'Pin:  ' + items[1]
             return items[0], value, items[1]
         else:
-            print 'Type: ' + header
-            print 'Val:  ' + value
+            #print 'Type: ' + header
+            #print 'Val:  ' + value
             return header, value
     
     def close(self):
